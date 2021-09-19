@@ -1,0 +1,16 @@
+﻿@import "reset.local";
+@import "font";
+@import "container";
+@import "button";
+
+.preload * {
+  transition: none !important;
+}
+
+a[disabled] {
+  pointer-events: none !important;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}

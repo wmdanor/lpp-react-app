@@ -1,0 +1,30 @@
+﻿.paginator {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 12px;
+  gap: 10px;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    line-height: 40px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    transition: border-color .2s, color .2s;
+
+    &:hover,
+    &.current {
+      border-color: lightseagreen;
+    }
+
+    &:hover:not(.current) {
+      color: #ff3434;
+    }
+  }
+}

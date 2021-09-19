@@ -1,0 +1,85 @@
+﻿.cart {
+  display: flex;
+  flex-direction: column;
+
+  &-clear-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    background: red;
+    color: white;
+    border: 2px solid red;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    font-size: 16px;
+
+    &:hover {
+      color: red;
+      background: white;
+    }
+  }
+
+  &-list {
+    display: flex;
+    list-style-type: none;
+    flex-direction: column;
+    padding: 16px;
+    margin: 0;
+  }
+
+  &-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 24px;
+    gap: 20px;
+
+    &-continue {
+      display: none;
+    }
+  }
+
+  &-receipt {
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #00a046;
+    background: rgba(0, 160, 70, 0.1);
+    border-radius: 4px;
+
+    &-sum {
+      font-size: 36px;
+    }
+
+    &-currency {
+      &::after {
+        content: '$';
+        font-size: 20px;
+        font-style: normal;
+      }
+    }
+
+    &-checkout {
+      margin-left: 24px;
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    &-footer {
+      flex-direction: row;
+      padding: 0 0 24px;
+      gap: 0;
+
+      &-continue {
+        display: inherit;
+      }
+    }
+  }
+}
