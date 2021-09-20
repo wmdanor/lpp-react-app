@@ -1,3 +1,1 @@
-﻿export CartActions from './CartActions';
-export CartPopupActions from './CartPopupActions';
-export FavoritesActions from './FavoritesActions';
+﻿export LoggedUserActions from './logged-user.actions';

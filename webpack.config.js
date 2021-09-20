@@ -77,8 +77,8 @@ const CONFIG = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        // include: /ClientApp/,
+        test: /\.jsx?$/,
+        resolve: { extensions: [".js", ".jsx"] },
         use: [
           {
             loader: 'babel-loader',
@@ -127,9 +127,8 @@ const CONFIG = {
     watchContentBase: true,
     noInfo: true,
     proxy: {
-      // ASP.NET Core proxy
-      // '/api': {
-      //   target: 'http://localhost:5001/api',
+      // '*': {
+      //   target: '/',
       // },
     },
   },

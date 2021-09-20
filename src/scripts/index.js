@@ -1,11 +1,10 @@
 ﻿import 'normalize.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/index.scss';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { App } from './components/App';
+import App from './pages/_app';
 import { store } from './reducers';
 
 // const onclick = (e) => {
