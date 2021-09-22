@@ -17,16 +17,14 @@ export default function App() {
     <Router>
       <div className="min-vh-100 d-flex flex-column">
         <NavComponent />
-        <div className="container-fluid p-0 d-flex flex-grow-1 flex-column align-items-center justify-content-center">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/sign-in" component={SignIn} />
-            <Route exact path="/profile/:id" component={Profile} />
-            <Route exact path="/profile/:id/friends" component={Friends} />
-            <Route exact path="/profile/:id/favorites" component={Favorites} />
-            <Route exact component={NotFound} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/sign-in" component={SignIn} />
+          <Route exact path="/profile/:id" component={Profile} />
+          <Route exact path="/profile/:id/friends" component={Friends} />
+          <Route exact path="/profile/:id/favorites" component={Favorites} />
+          <Route exact component={NotFound} />
+        </Switch>
       </div>
     </Router>
   );
