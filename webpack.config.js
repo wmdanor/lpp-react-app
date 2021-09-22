@@ -17,7 +17,8 @@ const CONFIG = {
   entry: './src/scripts/index.jsx',
   mode,
   output: {
-    filename: 'scripts/main.js',
+    filename: 'scripts/[name].chunk.js',
+    chunkFilename: 'scripts/[name].chunk.js',
     path: path.resolve(__dirname, buildPath),
     publicPath: '/',
   },
