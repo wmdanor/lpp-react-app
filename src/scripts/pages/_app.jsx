@@ -1,31 +1,38 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
-import Home from './index';
 import NotFound from './404';
-import SignIn from './sign-in';
-import Profile from './profile';
-import Friends from './profile/friends';
-import Favorites from './profile/favorites';
 import NavComponent from '../components/nav/nav.component';
+import Loading from './_loading';
+import ErrorBoundary from './_error-boundary';
 
 const Router = ReactRouterDOM.BrowserRouter;
 const { Route } = ReactRouterDOM;
 const { Switch } = ReactRouterDOM;
 
-export default function App() {
-  return (
-    <Router>
-      <div className="min-vh-100 d-flex flex-column">
-        <NavComponent />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/sign-in" component={SignIn} />
-          <Route exact path="/profile/:id" component={Profile} />
-          <Route exact path="/profile/:id/friends" component={Friends} />
-          <Route exact path="/profile/:id/favorites" component={Favorites} />
-          <Route exact component={NotFound} />
-        </Switch>
-      </div>
-    </Router>
-  );
-}
+const Home = lazy(() => import('./index'));
+const SignIn = lazy(() => import('./sign-in'));
+const Profile = lazy(() => import('./profile/index'));
+const Friends = lazy(() => import('./profile/friends'));
+const Favorites = lazy(() => import('./profile/favorites'));
+
+const App = () => (
+  <Router>
+    <div className="min-vh-100 d-flex flex-column">
+      <NavComponent />
+      <ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/sign-in" component={SignIn} />
+            <Route exact path="/profile/:id" component={Profile} />
+            <Route exact path="/profile/:id/friends" component={Friends} />
+            <Route exact path="/profile/:id/favorites" component={Favorites} />
+            <Route exact component={NotFound} />
+          </Switch>
+        </Suspense>
+      </ErrorBoundary>
+    </div>
+  </Router>
+);
+
+export default App;
