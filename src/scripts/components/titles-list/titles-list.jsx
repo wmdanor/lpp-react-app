@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Input } from 'reactstrap';
 import TitlesListItem from './titles-list-item';
 
@@ -11,17 +11,13 @@ const getTitlesPage = async (page) => {
 
   const requestPage = Math.floor(offset / API_PAGE_SIZE);
 
-  try {
-    const response = await fetch(
-      `https://api.tvmaze.com/shows?page=${requestPage}`,
-    );
+  const response = await fetch(
+    `https://api.tvmaze.com/shows?page=${requestPage}`,
+  );
 
-    const data = await response.json();
+  const data = await response.json();
 
-    return data.slice(pageOffset, pageOffset + PAGE_SIZE);
-  } catch (err) {
-    throw new Error(`Error occurred while loading data: "${err.message}"`);
-  }
+  return data.slice(pageOffset, pageOffset + PAGE_SIZE);
 };
 
 const getSearchedPage = async (page, query) => {
@@ -49,6 +45,8 @@ function TitlesList() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
   const [loadingError, setLoadingError] = useState('');
+
+  const scrollRef = useRef();
 
   const loadPage = (newPage) => {
     setPage(newPage);
@@ -88,11 +86,13 @@ function TitlesList() {
 
   const prevPageHandler = (e) => {
     e.preventDefault();
+    scrollRef.current.scrollIntoView();
     loadPage(page - 1);
   };
 
   const nextPageHandler = (e) => {
     e.preventDefault();
+    scrollRef.current.scrollIntoView();
     loadPage(page + 1);
   };
 
@@ -123,16 +123,43 @@ function TitlesList() {
       );
     }
 
-    return titles.map((title) => (
-      <TitlesListItem key={title.id} title={title} />
-    ));
+    return (
+      <div className="row">
+        {titles.map((title) => (
+          <TitlesListItem key={title.id} title={title} />
+        ))}
+      </div>
+    );
   };
 
-  return (
-    <div>
-      <div className="d-flex mb-2">
+  const renderPaginator = () => (
+    <div className="row py-3">
+      <Button
+        className="col-12 col-sm-4"
+        disabled={page === 1}
+        onClick={prevPageHandler}
+      >
+        Previous
+      </Button>
+      <div className="col-12 col-sm-4 py-1 py-sm-0 px-0 px-sm-2 px-lg-3">
         <Input
-          className="me-2"
+          className="text-center"
+          type="number"
+          onChange={pageChangeHandler}
+          value={page}
+        />
+      </div>
+      <Button className="col-12 col-sm-4" onClick={nextPageHandler}>
+        Next
+      </Button>
+    </div>
+  );
+
+  return (
+    <div ref={scrollRef}>
+      {renderPaginator()}
+      <div className="row mb-2">
+        <Input
           type="text"
           placeholder="Search"
           onChange={queryChangeHandler}
@@ -145,7 +172,7 @@ function TitlesList() {
         ) : (
           <div className="my-4 d-flex flex-column">
             <span className="text-center text-danger w-100">
-              Error occurred while page: &quot;{loadingError}&quot;
+              Error occurred while loading page: &quot;{loadingError}&quot;
             </span>
             <button
               type="button"
@@ -157,24 +184,7 @@ function TitlesList() {
           </div>
         )}
       </div>
-      <div className="d-flex align-items-center justify-content-center p-3">
-        <Button
-          className="flex-grow-1"
-          disabled={page === 1}
-          onClick={prevPageHandler}
-        >
-          Previous
-        </Button>
-        <Input
-          className="w-auto mx-3 flex-grow-1 text-center"
-          type="number"
-          onChange={pageChangeHandler}
-          value={page}
-        />
-        <Button className="flex-grow-1" onClick={nextPageHandler}>
-          Next
-        </Button>
-      </div>
+      {renderPaginator()}
     </div>
   );
 }
