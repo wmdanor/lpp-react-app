@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import loggedUserProp from '../../prop-types/loggedUser';
+import loggedUserProp from '../prop-types/loggedUser';
 
 const getTitleById = async (id) => {
   const response = await fetch(`https://api.tvmaze.com/shows/${id}`);
-  return response.json();
+
+  const data = await response.json();
+  if (response.status !== 200) {
+    throw new Error(`${response.status}, ${data.name}`);
+  }
+
+  return data;
 };
 
 function mapStateToProps(state) {
