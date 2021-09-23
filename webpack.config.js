@@ -13,14 +13,11 @@ const isDevBuild = mode !== 'production';
 const buildPath = './dist';
 
 const CONFIG = {
-  target: 'web',
-  entry: './src/scripts/index.jsx',
+  entry: './src/scripts/index.js',
   mode,
   output: {
-    filename: 'scripts/[name].chunk.js',
-    chunkFilename: 'scripts/[name].chunk.js',
+    filename: 'scripts/main.js',
     path: path.resolve(__dirname, buildPath),
-    publicPath: '/',
   },
   optimization: {
     minimize: !isDevBuild,
@@ -128,9 +125,7 @@ const CONFIG = {
     port: 3001,
     hot: true,
     watchContentBase: true,
-    noInfo: false,
-    historyApiFallback: true,
-    open: true,
+    noInfo: true,
     proxy: {
       // '*': {
       //   target: '/',

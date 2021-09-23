@@ -2,69 +2,61 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   Collapse,
-  Nav,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Navbar,
   NavbarBrand,
+  NavbarText,
   NavbarToggler,
   NavItem,
+  NavLink,
+  UncontrolledDropdown,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import loggedUserProp from '../../../prop-types/loggedUser';
-import NavLinkComponent from './nav-link.component';
 
 function mapStateToProps(state) {
   return {
-    loggedUser: state.loggedUser.user,
+    loggedUser: state.loggedUser.get('user'),
   };
 }
 
-const NavComponent = ({ loggedUser }) => {
+const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <Navbar color="light" light expand="md">
-      <div className="container">
-        <NavbarBrand activeClassName="active" tag={Link} to="/">
-          LUL
-        </NavbarBrand>
+    <div>
+      <Navbar color="light" light expand="md">
+        <NavbarBrand href="/">reactstrap</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLinkComponent to="/">Home</NavLinkComponent>
+              <NavLink href="/components/">Components</NavLink>
             </NavItem>
-            {loggedUser ? (
-              <>
-                <NavItem>
-                  <NavLinkComponent to={`/profile/{${loggedUser.id}/favorites`}>
-                    Favorites
-                  </NavLinkComponent>
-                </NavItem>
-                <NavItem>
-                  <NavLinkComponent to={`/profile/{${loggedUser.id}/friends`}>
-                    Friends
-                  </NavLinkComponent>
-                </NavItem>
-                <NavItem>
-                  <NavLinkComponent to="/profile">Profile</NavLinkComponent>
-                </NavItem>
-              </>
-            ) : (
-              <NavItem>
-                <NavLinkComponent to="/sign-in">Sign in</NavLinkComponent>
-              </NavItem>
-            )}
+            <NavItem>
+              <NavLink href="https://github.com/reactstrap/reactstrap">
+                GitHub
+              </NavLink>
+            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Options
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>Option 1</DropdownItem>
+                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>Reset</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </Nav>
+          <NavbarText>Simple Text</NavbarText>
         </Collapse>
-      </div>
-    </Navbar>
+      </Navbar>
+    </div>
   );
 };
 
-NavComponent.propTypes = {
-  loggedUser: loggedUserProp,
-};
-
-export default connect(mapStateToProps)(NavComponent);
+export default connect(mapStateToProps)(Nav);
