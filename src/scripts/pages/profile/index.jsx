@@ -32,16 +32,28 @@ const Index = ({ loggedUser }) => {
   const [user, setUser] = useState(undefined);
   const [loadingError, setLoadingError] = useState('');
 
-  useEffect(() => {
+  const loadProfile = () => {
     getUserById(Number(id))
-      .then((data) => setUser(data))
-      .catch((error) => setLoadingError(error.message));
+      .then((data) => {
+        setLoadingError('');
+        setUser(data);
+      })
+      .catch((err) => setLoadingError(err.message));
+  };
+
+  const tryAgainHandler = (e) => {
+    e.preventDefault();
+    loadProfile(id);
+  };
+
+  useEffect(() => {
+    loadProfile(id);
   }, []);
 
   const isLoggedUserProfile = user && loggedUser && user.id === loggedUser.id;
 
   return (
-    <div className="container py-3 px-5 shadow">
+    <div className="container py-4 px-5 shadow">
       {!loadingError && user && (
         <>
           {isLoggedUserProfile && <h2>Your profile</h2>}
@@ -65,10 +77,17 @@ const Index = ({ loggedUser }) => {
         </div>
       )}
       {loadingError && (
-        <div className="my-4 d-flex">
+        <div className="my-4 d-flex flex-column align-center">
           <span className="text-center text-danger w-100">
-            Error occurred while loading profile: &quot;{loadingError}&quot;
+            Error occurred while loading title: &quot;{loadingError}&quot;
           </span>
+          <button
+            type="button"
+            className="btn btn-link shadow-none"
+            onClick={tryAgainHandler}
+          >
+            Try again
+          </button>
         </div>
       )}
     </div>
