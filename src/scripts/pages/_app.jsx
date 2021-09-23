@@ -22,7 +22,7 @@ const App = () => (
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path={['/', '/titles']} component={Home} />
             <Route exact path="/sign-in" component={SignIn} />
             <Route exact path="/profile/:id" component={Profile} />
             <Route exact path="/profile/:id/friends" component={Friends} />
