@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import loggedUserProp from '../../../prop-types/loggedUser';
+import loggedUserProp from '../../prop-types/loggedUser';
 import omegalulImage from '../../../images/omegalul.png';
 
 function mapStateToProps(state) {
