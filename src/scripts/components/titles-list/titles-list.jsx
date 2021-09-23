@@ -17,6 +17,10 @@ const getTitlesPage = async (page) => {
 
   const data = await response.json();
 
+  if (response.status !== 200) {
+    throw new Error(`${response.status}, ${data.name}`);
+  }
+
   return data.slice(pageOffset, pageOffset + PAGE_SIZE);
 };
 
@@ -25,19 +29,19 @@ const getSearchedPage = async (page, query) => {
 
   const offset = PAGE_SIZE * (page - 1);
 
-  try {
-    const response = await fetch(
-      `https://api.tvmaze.com/search/shows?q=${query}`,
-    );
+  const response = await fetch(
+    `https://api.tvmaze.com/search/shows?q=${query}`,
+  );
 
-    const data = await response.json();
+  const data = await response.json();
 
-    const pageData = data.slice(offset, offset + PAGE_SIZE);
-
-    return pageData.map((el) => el.show);
-  } catch (err) {
-    throw new Error(`Error occurred while loading data: "${err.message}"`);
+  if (response.status !== 200) {
+    throw new Error(`${response.status}, ${data.name}`);
   }
+
+  const pageData = data.slice(offset, offset + PAGE_SIZE);
+
+  return pageData.map((el) => el.show);
 };
 
 function TitlesList() {

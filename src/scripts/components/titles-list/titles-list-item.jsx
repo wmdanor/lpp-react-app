@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import titleProp from '../../../prop-types/title';
+import titleProp from '../../prop-types/title';
 
 function TitlesListItem({ title }) {
   return (
