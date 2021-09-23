@@ -3,17 +3,17 @@
   "name": "lpp-react-app",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack serve --open --inline",
+    "dev": "cross-env NODE_ENV=development webpack serve",
     "start": "node ./src/server",
     "build": "rimraf ./dist && cross-env NODE_ENV=production webpack --progress"
   },
   "dependencies": {
+    "@popperjs/core": "^2.10.1",
     "bootstrap": "^5.1.1",
     "classnames": "^2.3.1",
     "connected-react-router": "^6.9.1",
     "express": "^4.17.1",
     "history": "^5.0.0",
-    "immutable": "^4.0.0-rc.12",
     "intl": "^1.2.5",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
