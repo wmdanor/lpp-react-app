@@ -58,7 +58,7 @@ const SignIn = ({ setLoggedUser }) => {
       <div className="w-100">
         <Form
           onSubmit={onSignIn}
-          className="shadow p-5 w-auto d-flex flex-column"
+          className="shadow p-5 w-auto d-flex flex-column container"
         >
           <h2 className="mb-2 text-center">Sign in</h2>
           <FormGroup>
