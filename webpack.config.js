@@ -6,7 +6,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+// const proxyHandler = require("./src/scripts/dev-proxy");
 
 const mode = process.env.NODE_ENV;
 const isDevBuild = mode !== 'production';
@@ -35,7 +36,7 @@ const CONFIG = {
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }],
+          preset: ['default', {discardComments: {removeAll: true}}],
         },
       }),
     ] : [
@@ -81,7 +82,7 @@ const CONFIG = {
     rules: [
       {
         test: /\.jsx?$/,
-        resolve: { extensions: [".js", ".jsx"] },
+        resolve: {extensions: [".js", ".jsx"]},
         use: [
           {
             loader: 'babel-loader',
@@ -132,8 +133,8 @@ const CONFIG = {
     historyApiFallback: true,
     open: true,
     proxy: {
-      // '*': {
-      //   target: '/',
+      // '/api': {
+      //   bypass: proxyHandler,
       // },
     },
   },
