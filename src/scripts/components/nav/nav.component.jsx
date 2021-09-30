@@ -48,7 +48,9 @@ const NavComponent = ({ loggedUser }) => {
                   </NavLinkComponent>
                 </NavItem>
                 <NavItem>
-                  <NavLinkComponent to="/profile">Profile</NavLinkComponent>
+                  <NavLinkComponent to={`/profile/{${loggedUser.id}`}>
+                    Profile
+                  </NavLinkComponent>
                 </NavItem>
               </>
             ) : (
