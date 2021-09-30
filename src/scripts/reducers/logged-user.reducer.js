@@ -1,11 +1,12 @@
-import { Map } from 'immutable';
-
 export const SET_USER = 'SET_USER';
 
-const LoggedUserReducer = (state = Map({ user: undefined }), action) => {
+const LoggedUserReducer = (state = { user: undefined }, action) => {
   switch (action.type) {
     case SET_USER:
-      return state.set('user', action.payload);
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
       return state;
   }

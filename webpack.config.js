@@ -6,18 +6,22 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+// const proxyHandler = require("./src/scripts/dev-proxy");
 
 const mode = process.env.NODE_ENV;
 const isDevBuild = mode !== 'production';
 const buildPath = './dist';
 
 const CONFIG = {
-  entry: './src/scripts/index.js',
+  target: 'web',
+  entry: './src/scripts/index.jsx',
   mode,
   output: {
-    filename: 'scripts/main.js',
+    filename: 'scripts/[name].chunk.js',
+    chunkFilename: 'scripts/[name].chunk.js',
     path: path.resolve(__dirname, buildPath),
+    publicPath: '/',
   },
   optimization: {
     minimize: !isDevBuild,
@@ -32,7 +36,7 @@ const CONFIG = {
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }],
+          preset: ['default', {discardComments: {removeAll: true}}],
         },
       }),
     ] : [
@@ -78,7 +82,7 @@ const CONFIG = {
     rules: [
       {
         test: /\.jsx?$/,
-        resolve: { extensions: [".js", ".jsx"] },
+        resolve: {extensions: [".js", ".jsx"]},
         use: [
           {
             loader: 'babel-loader',
@@ -125,10 +129,12 @@ const CONFIG = {
     port: 3001,
     hot: true,
     watchContentBase: true,
-    noInfo: true,
+    noInfo: false,
+    historyApiFallback: true,
+    open: true,
     proxy: {
-      // '*': {
-      //   target: '/',
+      // '/api': {
+      //   bypass: proxyHandler,
       // },
     },
   },
