@@ -9,7 +9,7 @@ import {
   NavItem,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import loggedUserProp from '../../../prop-types/loggedUser';
+import loggedUserProp from '../../prop-types/loggedUser';
 import NavLinkComponent from './nav-link.component';
 
 function mapStateToProps(state) {
